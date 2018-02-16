@@ -1,0 +1,27 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="actions">
+    <?php  $_order = $block->getOrder() ?>
+    <?php if ($this->helper('Magento\Sales\Helper\Reorder')->canReorder($_order->getEntityId())) : ?>
+        <a href="#" data-post='<?php /* @escapeNotVerified */ echo
+        $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+            ->getPostData($block->getReorderUrl($_order))
+        ?>' class="action order">
+            <span><?= /* @escapeNotVerified */ __('Reorder') ?></span>
+        </a>
+    <?php endif ?>
+    <?php if ($_order->canCancel()) : ?>
+            <a href="<?= $this->getUrl('cancelorder/order/cancel').'?order_id='.$_order->getEntityId(); ?>" class="action cancel_order">
+                <span><?= ('Cancel Order') ?></span>    
+            </a>
+    <?php endif ?>
+    <a class="action print"
+       href="<?= /* @escapeNotVerified */ $block->getPrintUrl($_order) ?>"
+       onclick="this.target='_blank';">
+        <span><?= /* @escapeNotVerified */ __('Print Order') ?></span>
+    </a>
+    <?= $block->getChildHtml() ?>
+</div>
